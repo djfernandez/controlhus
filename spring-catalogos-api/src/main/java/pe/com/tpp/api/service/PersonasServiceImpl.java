@@ -19,7 +19,7 @@ public class PersonasServiceImpl implements IPersonasService {
 	@Transactional(readOnly = true)
 	public List<Personas> listarTodos() {
 		// TODO Auto-generated method stub
-		return (List<Personas>) personasDao.findAll() ;
+		return (List<Personas>) personasDao.findAll();
 	}
 
 	@Override

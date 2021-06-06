@@ -2,7 +2,7 @@ package pe.com.tpp.api.dao;
 
 import java.util.List;
 
-public interface ICrud<T> {
+public interface ICRUD<T> {
 
 	public List<T> listarTodos();
 	
