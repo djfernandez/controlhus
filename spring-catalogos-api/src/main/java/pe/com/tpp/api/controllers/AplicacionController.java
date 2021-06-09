@@ -13,12 +13,12 @@ import pe.com.tpp.api.service.IUsuariosService;
 import javax.validation.Valid;
 
 @Controller
-public class LoginController {
+public class AplicacionController {
 
 	@Autowired
 	private IUsuariosService usuarioService;
 	
-	@GetMapping("/login")
+	@GetMapping({"/login", "/"})
 	public String login() {
 		return "login";
 	}
@@ -33,9 +33,15 @@ public class LoginController {
 		
 		if (usuarios != null)
 		{
-			return "listado";
+			return "/historias/listar";
 		}
 		
 		return "login";
 	}
+	
+	@GetMapping("/registrar")
+	public String HURegistrar() {
+		return "historias/registrar";
+	}
+	
 }
