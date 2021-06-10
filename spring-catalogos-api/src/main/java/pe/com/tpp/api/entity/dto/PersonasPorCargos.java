@@ -1,18 +1,16 @@
 package pe.com.tpp.api.entity.dto;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Immutable;
+//import org.hibernate.annotations.Immutable;
 
 @Entity
 @Table(name = "personasporcargos")
-@Immutable
 public class PersonasPorCargos implements Serializable {
 
 	private static final long serialVersionUID = 1L;

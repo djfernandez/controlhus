@@ -6,12 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import pe.com.tpp.api.entity.Historias;
-import pe.com.tpp.api.entity.Login;
-import pe.com.tpp.api.entity.Usuarios;
-import pe.com.tpp.api.service.IUsuariosService;
+import pe.com.tpp.api.entity.*;
+import pe.com.tpp.api.entity.dto.*;
+import pe.com.tpp.api.service.*;
 
-import java.util.Map;
+import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -20,35 +20,48 @@ public class AplicacionController {
 
 	@Autowired
 	private IUsuariosService usuarioService;
+
+	@Autowired
+	private IPersonasPorCargosService personasPorCargosService;
 	
-	@GetMapping({"/login", "/"})
+	@Autowired
+	private IHistoriasService historiasService;
+
+	@GetMapping({ "/login", "/" })
 	public String login(Model model) {
 		model.addAttribute("titulo", "DEV");
 		return "login";
 	}
-	
+
 	@PostMapping("/login")
 	public String verificarAccesos(@Valid Login login, Model model) {
-		
-		model.addAttribute("titulo","Listado de HUs");
+
+		model.addAttribute("titulo", "Listado de HUs");
 		model.addAttribute("accesos", login);
-		
+
 		Usuarios usuarios = usuarioService.buscarAccesos(login);
-		
-		if (usuarios != null)
-		{
+
+		if (usuarios != null) {
 			return "/historias/listar";
 		}
-		
+
 		return "login";
 	}
-	
+
 	@GetMapping("/registrar")
-	public String HURegistrar(Map<String, Object> model) {
-		
+	public String gethuRegistrar(Model model) {
 		Historias historias = new Historias();
-		model.put("historia", historias);
+		List<PersonasPorCargos> listado = personasPorCargosService.listarTodos();
+		model.addAttribute("listado", listado);
+		model.addAttribute("historia", historias);
 		return "historias/registrar";
 	}
 	
+	@PostMapping("/registrar")
+	public String posthuRegistrar(@Valid Historias historias, Model model) {
+		
+		historiasService.grabar(historias);
+		return "/historias/listar";
+	}
+
 }
