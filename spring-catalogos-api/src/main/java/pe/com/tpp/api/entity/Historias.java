@@ -8,39 +8,49 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "historias")
 public class Historias implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_historia")
 	private Long id;
-	
+
 	@Column(name = "id_usuario")
 	private Long id_usuario;
-	
+
 	@Column(name = "id_como")
 	private Long id_como;
-	
+
+	@NotEmpty
 	@Column(name = "necesita")
 	private String necesita;
-	
+
+	@NotEmpty
 	@Column(name = "para")
 	private String para;
-	
-	@Column(name = "estado", nullable = false, columnDefinition="int default '1'")
+
+	@Column(name = "estado")
 	private Integer estado;
 
-	@Column(name = "registro", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+	@Column(name = "registro")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date registro;
+	private Date fechaRegistro;
+
+	@PrePersist
+	public void prePersist() {
+		fechaRegistro = new Date();
+		estado = 1;
+	}
 
 	public Long getId() {
 		return id;
@@ -90,12 +100,12 @@ public class Historias implements Serializable {
 		this.estado = estado;
 	}
 
-	public Date getRegistro() {
-		return registro;
+	public Date getFechaRegistro() {
+		return fechaRegistro;
 	}
 
-	public void setRegistro(Date registro) {
-		this.registro = registro;
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
 	}
-	
+
 }

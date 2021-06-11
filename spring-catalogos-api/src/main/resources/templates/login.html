@@ -32,6 +32,8 @@
 						<input type="submit" class="btn btn-lg btn-primary btn-block"/>
 					</div>
 					
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+					
 				</form>
 			</div>
 		</div>

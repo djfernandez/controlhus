@@ -7,7 +7,7 @@ import pe.com.tpp.api.entity.Usuarios;
 public interface IUsuariosDao extends CrudRepository<Usuarios, Long> {
 
 	public Usuarios findByUsuarioAndClave(String usuario, String clave);
-	
-	//public Usuarios findByLoginAndDocumentoIdentidad(String login, String documentoIdentidad);
+
+	public Usuarios findByUsuario(String usuario);
 
 }

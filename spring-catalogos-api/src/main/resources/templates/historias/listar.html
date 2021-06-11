@@ -6,12 +6,53 @@
 <body>
 	<header th:replace="layout/layout :: header"></header>
 	<div class="container py-4">
-		<div class="form-group col-sm-6">
-			<a class="btn btn-success btn-sm" th:href="@{/registrar}" th:text="'crear hu'"></a>
-		</div>
-
 		<div class="card bg-light">
 			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+				<div class="form-group col-sm-6">
+					<a class="btn btn-success btn-sm" th:href="@{/registrar}" th:text="'crear hu'"></a>
+				</div>
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>Como</th>
+							<th>Usuario</th>
+							<th>Necesito</th>
+							<th>Para</th>
+							<th>Fecha</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="historia: ${historias}">
+							<td><a class="btn btn-primary btn-xs" th:href="@{/ver/} + ${historia.id}"
+									th:text="${historia.id}"></a></td>
+							<td th:text="${historia.id_como}"></td>
+							<td th:text="${historia.id_usuario}"></td>
+							<td th:text="${historia.necesita}"></td>
+							<td th:text="${historia.para}"></td>
+							<td th:text="${historia.fechaRegistro}"></td>
+							<!--
+							<td><a class="btn btn-success btn-sm"
+								th:href="@{'/factura/form/' + ${cliente.id}}"
+								th:text="'crear factura'"></a></td>
+							<td><a class="btn btn-primary btn-sm"
+								th:href="@{/form/} + ${cliente.id}" th:text="'editar'"></a></td>
+							<td><a class="btn btn-danger btn-sm"
+								th:href="@{/eliminar/} + ${cliente.id}" th:text="'eliminar'"
+								onclick="return confirm('Est�s seguro que quieres eliminar?');"></a></td>
+								-->
+						</tr>
+					</tbody>
+
+				</table>
+
+
+
+
+
+			</div>
 		</div>
 	</div>
 	<footer th:replace="layout/layout :: footer"></footer>
