@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.com.tpp.api.dao.IHistoriasDao;
-import pe.com.tpp.api.entity.Historias;
+import pe.com.tpp.api.entity.Historia;
 
 @Service
 public class HistoriasServiceImpl implements IHistoriasService {
@@ -17,21 +17,21 @@ public class HistoriasServiceImpl implements IHistoriasService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Historias> listarTodos() {
+	public List<Historia> listarTodos() {
 		// TODO Auto-generated method stub
-		return (List<Historias>) historiasDao.findAll();
+		return (List<Historia>) historiasDao.findAll();
 	}
 
 	@Override
 	@Transactional
-	public Historias grabar(Historias t) {
+	public Historia grabar(Historia t) {
 		// TODO Auto-generated method stub
 		return historiasDao.save(t);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Historias buscarPorId(Long id) {
+	public Historia buscarPorId(Long id) {
 		// TODO Auto-generated method stub
 		return historiasDao.findById(id).orElse(null);
 	}

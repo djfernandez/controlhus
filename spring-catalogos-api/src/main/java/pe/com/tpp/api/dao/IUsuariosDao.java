@@ -2,12 +2,12 @@ package pe.com.tpp.api.dao;
 
 import org.springframework.data.repository.CrudRepository;
 
-import pe.com.tpp.api.entity.Usuarios;
+import pe.com.tpp.api.entity.Usuario;
 
-public interface IUsuariosDao extends CrudRepository<Usuarios, Long> {
+public interface IUsuariosDao extends CrudRepository<Usuario, Long> {
 
-	public Usuarios findByUsuarioAndClave(String usuario, String clave);
+	public Usuario findByUsernameAndPassword(String username, String password);
 
-	public Usuarios findByUsuario(String usuario);
+	public Usuario findByUsername(String username);
 
 }

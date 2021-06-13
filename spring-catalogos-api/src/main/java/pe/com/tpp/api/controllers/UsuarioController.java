@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import pe.com.tpp.api.entity.Usuarios;
+import pe.com.tpp.api.entity.Usuario;
 import pe.com.tpp.api.service.IUsuariosService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -37,14 +37,14 @@ public class UsuarioController {
 
 	@PostMapping("/usuarios")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuarios grabar(@RequestBody Usuarios usuario) {
+	public Usuario grabar(@RequestBody Usuario usuario) {
 		return usuarioService.grabar(usuario);
 	}
 
 	@PutMapping("/usuarios/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuarios modificar(@RequestBody Usuarios usuario, @PathVariable Long id) {
-		Usuarios usuarioActual = usuarioService.buscarPorId(id);
+	public Usuario modificar(@RequestBody Usuario usuario, @PathVariable Long id) {
+		Usuario usuarioActual = usuarioService.buscarPorId(id);
 /*
 		usuarioActual.setNombre(usuario.getNombre());
 		usuarioActual.setLinea(usuario.getLinea());

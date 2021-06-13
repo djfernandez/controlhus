@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.com.tpp.api.dao.ICargosDao;
-import pe.com.tpp.api.entity.Cargos;
+import pe.com.tpp.api.entity.Cargo;
 
 @Service
 public class CargosServiceImpl implements ICargosService {
@@ -17,21 +17,21 @@ public class CargosServiceImpl implements ICargosService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Cargos> listarTodos() {
+	public List<Cargo> listarTodos() {
 		// TODO Auto-generated method stub
-		return (List<Cargos>) cargosDao.findAll();
+		return (List<Cargo>) cargosDao.findAll();
 	}
 
 	@Override
 	@Transactional
-	public Cargos grabar(Cargos cargo) {
+	public Cargo grabar(Cargo cargo) {
 		// TODO Auto-generated method stub
 		return cargosDao.save(cargo);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Cargos buscarPorId(Long id) {
+	public Cargo buscarPorId(Long id) {
 		// TODO Auto-generated method stub
 		return cargosDao.findById(id).orElse(null);
 	}

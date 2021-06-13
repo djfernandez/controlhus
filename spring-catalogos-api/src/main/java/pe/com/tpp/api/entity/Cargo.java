@@ -2,23 +2,22 @@ package pe.com.tpp.api.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "cargos")
-public class Cargos implements Serializable {
+public class Cargo implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -35,6 +34,9 @@ public class Cargos implements Serializable {
 	@Column(name = "registro", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date registro;
+	
+	@OneToMany(mappedBy = "cargo")
+	private List<Persona> persona;	
 	
 	public Long getId() {
 		return id;
@@ -66,6 +68,14 @@ public class Cargos implements Serializable {
 
 	public void setRegistro(Date registro) {
 		this.registro = registro;
+	}
+
+	public List<Persona> getPersona() {
+		return persona;
+	}
+
+	public void setPersona(List<Persona> persona) {
+		this.persona = persona;
 	}
 
 }

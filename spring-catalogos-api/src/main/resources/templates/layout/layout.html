@@ -1,49 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head">
-	<meta charset="UTF-8" />
-	<title th:text="'HU de Aplicaciones - ' + ${titulo}"></title>
-	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+<meta charset="UTF-8" />
+<title th:text="'HU de Aplicaciones - ' + ${titulo}"></title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
 </head>
 
 <body>
 
 	<header th:fragment="header">
 		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-			<a class="navbar-brand" th:href="@{/login}" th:text="#{text.menu.aplicacion}">Historias de usuarios</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" aria-label="Toggle navigation">
+			<a class="navbar-brand" th:href="@{/login}"
+				th:text="#{text.menu.aplicacion}">Historias de usuarios</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item"><a class="nav-link" th:href="@{/listado}"
-							th:text="#{text.menu.historias}">¿?</a></li>
+						th:text="#{text.menu.historias}">¿?</a></li>
 				</ul>
 				<ul class="navbar-nav navbar-right">
-					<li><a class="btn btn-outline-primary" th:href="@{/login}" th:text="#{text.menu.signin}">¿?</a>
-					</li>
+					<li><a class="btn btn-outline-primary" th:href="@{/login}"
+						th:text="#{text.menu.signin}">¿?</a></li>
 
-					<li class="dropdown show"><a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
-							id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"><span sec:authentication="name"></span></a>
+					<li class="dropdown show"><a
+						class="btn btn-outline-primary dropdown-toggle" href="#"
+						role="button" id="dropdownMenuLink" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"><span
+							sec:authentication="name"></span></a>
 
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 							<form id="logoutForm" th:action="@{/logout}" method="post">
-								<button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();"
+								<button class="dropdown-item"
+									onclick="document.getElementById('logoutForm').submit();"
 									type="submit" th:text="#{text.menu.signout}">¿?</button>
 							</form>
-						</div>
-					</li>
+						</div></li>
 				</ul>
 			</div>
 		</nav>
 
-		<div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
-		<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
-		<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
-		<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+		<div class="alert alert-success" th:if="${success != null}"
+			th:text="${success}"></div>
+		<div class="alert alert-danger" th:if="${error != null}"
+			th:text="${error}"></div>
+		<div class="alert alert-warning" th:if="${warning != null}"
+			th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info != null}"
+			th:text="${info}"></div>
 	</header>
 
 	<div class="container"></div>
@@ -51,13 +60,15 @@
 	<footer th:fragment="footer" class="container">
 		<hr />
 		<img th:src="@{/images/spring.png}" alt="Spring logo" />
-		<p>
-			<span th:text="#{text.footer.user}">Usuario logeado:</span> <span sec:authentication="name"></span> | <span
-				th:text="#{text.footer.roles}">Roles:</span> <span sec:authentication="principal.authorities"></span>
+		<p sec:authorize="isAuthenticated()">
+			<span th:text="#{text.footer.user}">Usuario logeado:</span> <span
+				sec:authentication="name"></span> | <span
+				th:text="#{text.footer.roles}">Roles:</span> <span
+				sec:authentication="principal.authorities"></span>
 		</p>
-		<p th:utext="#{text.footer.powered}">
-		</p>
-		<p th:utext="#{text.footer.copy}"><br />
+		<p th:utext="#{text.footer.powered}"></p>
+		<p th:utext="#{text.footer.copy}">
+			<br />
 		</p>
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Bootstrap JS -->

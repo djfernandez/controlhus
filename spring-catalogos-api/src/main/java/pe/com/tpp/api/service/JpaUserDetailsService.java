@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.com.tpp.api.dao.IUsuariosDao;
-import pe.com.tpp.api.entity.Roles;
-import pe.com.tpp.api.entity.Usuarios;
+import pe.com.tpp.api.entity.Role;
+import pe.com.tpp.api.entity.Usuario;
 
 @Service("jpaUserDetailsService")
 public class JpaUserDetailsService implements UserDetailsService {
@@ -31,16 +31,18 @@ public class JpaUserDetailsService implements UserDetailsService {
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		Usuarios usuario = usuariosDao.findByUsuario(username);
+		Usuario usuario = usuariosDao.findByUsername(username);
 
 		if (usuario == null) {
 			logger.error("Error en el Login: no existe el usuario '" + username + "' en el sistema!");
 			throw new UsernameNotFoundException("Username: " + username + " no existe en el sistema!");
 		}
 
+		logger.info("Usuario valido. el usuario es: " + username);
+		
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-		for (Roles role : usuario.getRoles()) {
+		for (Role role : usuario.getRoles()) {
 			logger.info("Role: ".concat(role.getAuthority()));
 			authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
 		}
@@ -51,7 +53,7 @@ public class JpaUserDetailsService implements UserDetailsService {
 					"Error en el Login: usuario '" + username + "' no tiene roles asignados!");
 		}
 
-		return new User(usuario.getUsuario(), usuario.getClave(), true, true, true, true, authorities);
+		return new User(usuario.getUsername(), usuario.getPassword(), true, true, true, true, authorities);
 	}
 
 }

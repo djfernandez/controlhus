@@ -1,6 +1,8 @@
 package pe.com.tpp.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,55 +23,41 @@ import javax.validation.Valid;
 public class AplicacionController {
 
 	@Autowired
-	private IUsuariosService usuarioService;
-
-	@Autowired
 	private IPersonasPorCargosService personasPorCargosService;
 
 	@Autowired
 	private IHistoriasService historiasService;
 
-	@GetMapping({ "/login", "/" })
+	@Autowired
+	private MessageSource messageSource;
+
+	@GetMapping("/login")
 	public String login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, Model model, Principal principal,
 			RedirectAttributes flash) {
+
 		model.addAttribute("titulo", "DEV");
 
 		if (principal != null) {
-			flash.addFlashAttribute("info", "Ya ha inciado sesión anteriormente");
+			flash.addFlashAttribute("info", messageSource.getMessage("text.login.already", null, null));
 			return "redirect:/";
 		}
 
 		if (error != null) {
-			model.addAttribute("error",
-					"Error en el login: Nombre de usuario o contraseña incorrecta, por favor vuelva a intentarlo!");
+			model.addAttribute("error", messageSource.getMessage("text.login.error", null, null));
 		}
 
 		if (logout != null) {
-			model.addAttribute("success", "Ha cerrado sesión con éxito!");
+			model.addAttribute("success", messageSource.getMessage("text.login.logout", null, null));
 		}
 
-		return "login";
-	}
-
-	@PostMapping("/login")
-	public String verificarAccesos(@Valid Login login, Model model) {
-
-		model.addAttribute("titulo", "Listado de HUs");
-		model.addAttribute("accesos", login);
-		Usuarios usuarios = usuarioService.buscarAccesos(login);
-		if (usuarios != null) {
-			List<Historias> historias = historiasService.listarTodos();
-			model.addAttribute("historias", historias);
-			return "/historias/listar";
-		}
 		return "login";
 	}
 
 	@GetMapping("/registrar")
 	public String gethuRegistrar(Model model) {
 
-		Historias historias = new Historias();
+		Historia historias = new Historia();
 		List<PersonasPorCargos> listado = personasPorCargosService.listarTodos();
 		model.addAttribute("listado", listado);
 		model.addAttribute("historias", historias);
@@ -77,10 +65,20 @@ public class AplicacionController {
 	}
 
 	@PostMapping("/registrar")
-	public String posthuRegistrar(@Valid Historias historias, Model model) {
+	public String posthuRegistrar(@Valid Historia historias, Model model) {
 
 		historias.setId((long) 0);
 		historiasService.grabar(historias);
+		return "redirect:listado";
+	}
+
+	@GetMapping({ "/listado", "/" })
+	public String gethuListado(Model model) {
+
+		List<Historia> historias = historiasService.listarTodos();
+		model.addAttribute("titulo", "DEV");
+		model.addAttribute("historias", historias);
+
 		return "/historias/listar";
 	}
 

@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -16,7 +15,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "personas")
-public class Personas implements Serializable {
+public class Persona implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,9 +23,6 @@ public class Personas implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_persona")
 	private Long id;
-
-	@Column(name = "id_cargo", nullable = false)
-	private Long id_cargo;
 
 	@Column(name = "nombres", nullable = false)
 	private String nombres;
@@ -45,8 +41,7 @@ public class Personas implements Serializable {
 	private Date registro;
 	
 	@ManyToOne
-	@JoinColumn(name = "id", updatable = false, insertable = false)
-	private Cargos cargos;
+	private Cargo cargo;
 
 	public Long getId() {
 		return id;
@@ -54,14 +49,6 @@ public class Personas implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getId_cargo() {
-		return id_cargo;
-	}
-
-	public void setId_cargo(Long id_cargo) {
-		this.id_cargo = id_cargo;
 	}
 
 	public String getNombres() {
@@ -102,6 +89,14 @@ public class Personas implements Serializable {
 
 	public void setRegistro(Date registro) {
 		this.registro = registro;
+	}
+
+	public Cargo getCargos() {
+		return cargo;
+	}
+
+	public void setCargos(Cargo cargos) {
+		this.cargo = cargos;
 	}
 
 }

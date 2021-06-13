@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "historias")
-public class Historias implements Serializable {
+public class Historia implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,11 +26,11 @@ public class Historias implements Serializable {
 	@Column(name = "id_historia")
 	private Long id;
 
-	@Column(name = "id_usuario")
-	private Long id_usuario;
+	@ManyToOne
+	private Usuario usuario;
 
-	@Column(name = "id_como")
-	private Long id_como;
+	@ManyToOne
+	private Persona persona;
 
 	@NotEmpty
 	@Column(name = "necesita")
@@ -45,7 +46,7 @@ public class Historias implements Serializable {
 	@Column(name = "registro")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaRegistro;
-
+	
 	@PrePersist
 	public void prePersist() {
 		fechaRegistro = new Date();
@@ -58,22 +59,6 @@ public class Historias implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getId_usuario() {
-		return id_usuario;
-	}
-
-	public void setId_usuario(Long id_usuario) {
-		this.id_usuario = id_usuario;
-	}
-
-	public Long getId_como() {
-		return id_como;
-	}
-
-	public void setId_como(Long id_como) {
-		this.id_como = id_como;
 	}
 
 	public String getNecesita() {
@@ -107,5 +92,22 @@ public class Historias implements Serializable {
 	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Persona getPersona() {
+		return persona;
+	}
+
+	public void setPersona(Persona persona) {
+		this.persona = persona;
+	}
+	
 
 }

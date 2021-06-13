@@ -28,8 +28,8 @@
 						<tr th:each="historia: ${historias}">
 							<td><a class="btn btn-primary btn-xs" th:href="@{/ver/} + ${historia.id}"
 									th:text="${historia.id}"></a></td>
-							<td th:text="${historia.id_como}"></td>
-							<td th:text="${historia.id_usuario}"></td>
+							<td th:text="${historia.persona}"></td>
+							<td th:text="${historia.usuario}"></td>
 							<td th:text="${historia.necesita}"></td>
 							<td th:text="${historia.para}"></td>
 							<td th:text="${historia.fechaRegistro}"></td>
