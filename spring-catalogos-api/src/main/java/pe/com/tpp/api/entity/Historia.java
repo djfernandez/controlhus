@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "historias")
@@ -26,16 +32,21 @@ public class Historia implements Serializable {
 	@Column(name = "id_historia")
 	private Long id;
 
-	@ManyToOne
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;
 
-	@ManyToOne
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Persona persona;
 
+	@NotNull
 	@NotEmpty
 	@Column(name = "necesita")
 	private String necesita;
 
+	@NotNull
 	@NotEmpty
 	@Column(name = "para")
 	private String para;
@@ -45,6 +56,7 @@ public class Historia implements Serializable {
 
 	@Column(name = "registro")
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date fechaRegistro;
 	
 	@PrePersist

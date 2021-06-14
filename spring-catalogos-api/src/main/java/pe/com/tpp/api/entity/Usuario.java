@@ -44,7 +44,7 @@ public class Usuario implements Serializable {
 	@JoinColumn(name = "user_id")
 	private List<Role> roles;
 
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private List<Historia> historia;
 
 	public Long getId() {

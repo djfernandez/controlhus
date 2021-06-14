@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,7 +41,7 @@ public class Persona implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date registro;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Cargo cargo;
 
 	public Long getId() {

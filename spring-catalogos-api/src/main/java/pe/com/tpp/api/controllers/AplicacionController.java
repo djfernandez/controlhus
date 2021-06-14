@@ -2,7 +2,6 @@ package pe.com.tpp.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,11 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import pe.com.tpp.api.dao.IUsuariosDao;
 import pe.com.tpp.api.entity.*;
 import pe.com.tpp.api.entity.dto.*;
 import pe.com.tpp.api.service.*;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -27,6 +28,9 @@ public class AplicacionController {
 
 	@Autowired
 	private IHistoriasService historiasService;
+
+	@Autowired
+	private IUsuariosDao usuarioDao;
 
 	@Autowired
 	private MessageSource messageSource;
@@ -58,6 +62,7 @@ public class AplicacionController {
 	public String gethuRegistrar(Model model) {
 
 		Historia historias = new Historia();
+		historias.setFechaRegistro(new Date());
 		List<PersonasPorCargos> listado = personasPorCargosService.listarTodos();
 		model.addAttribute("listado", listado);
 		model.addAttribute("historias", historias);
@@ -65,9 +70,12 @@ public class AplicacionController {
 	}
 
 	@PostMapping("/registrar")
-	public String posthuRegistrar(@Valid Historia historias, Model model) {
+	public String posthuRegistrar(@Valid Historia historias, Model model, Principal principal) {
 
-		historias.setId((long) 0);
+		Usuario usuario = usuarioDao.findByUsername(principal.getName());
+
+		// historias.setId((long) 0);
+		historias.setUsuario(usuario);
 		historiasService.grabar(historias);
 		return "redirect:listado";
 	}
@@ -75,7 +83,7 @@ public class AplicacionController {
 	@GetMapping({ "/listado", "/" })
 	public String gethuListado(Model model) {
 
-		List<Historia> historias = historiasService.listarTodos();
+		List<Historia> historias = historiasService.listadoPersonasCargosUsuario(1);
 		model.addAttribute("titulo", "DEV");
 		model.addAttribute("historias", historias);
 
