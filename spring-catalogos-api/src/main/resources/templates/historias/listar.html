@@ -18,9 +18,9 @@
 						<tr>
 							<th>id</th>
 							<th>Como</th>
-							<th>Usuario</th>
 							<th>Necesito</th>
 							<th>Para</th>
+							<th>Usuario</th>
 							<th>Fecha</th>
 						</tr>
 					</thead>
@@ -29,9 +29,9 @@
 							<td><a class="btn btn-primary btn-xs" th:href="@{/ver/} + ${historia.id}"
 									th:text="${historia.id}"></a></td>
 							<td th:text="${historia.persona.cargos.nombre} + ' - ' + ${historia.persona.nombres}"></td>
-							<td th:text="${historia.Usuario.username}"></td>
 							<td th:text="${historia.necesita}"></td>
 							<td th:text="${historia.para}"></td>
+							<td th:text="${historia.Usuario.username}"></td>
 							<td th:text="${historia.fechaRegistro}"></td>
 							<!--
 							<td><a class="btn btn-success btn-sm"

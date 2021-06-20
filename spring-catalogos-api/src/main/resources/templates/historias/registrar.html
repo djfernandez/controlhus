@@ -16,7 +16,7 @@
 						<label class="col-sm-2 col-form-label">Como</label>
 						<div class="col-sm-6">
 							<select class="form-control" th:field="*{persona}">
-								<option th:each="item: ${listado}" th:value="${item.id_persona}"
+								<option th:each="item: ${listado}" th:value="${item.id}"
 									th:text="${item.Nombres} + ' ' + ${item.Apellidos}" />
 							</select>
 						</div>

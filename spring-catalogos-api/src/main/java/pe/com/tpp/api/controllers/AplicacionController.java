@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import pe.com.tpp.api.dao.IPersonasDao;
 import pe.com.tpp.api.dao.IUsuariosDao;
 import pe.com.tpp.api.entity.*;
-import pe.com.tpp.api.entity.dto.*;
 import pe.com.tpp.api.service.*;
 
 import java.security.Principal;
@@ -24,13 +24,13 @@ import javax.validation.Valid;
 public class AplicacionController {
 
 	@Autowired
-	private IPersonasPorCargosService personasPorCargosService;
-
-	@Autowired
 	private IHistoriasService historiasService;
 
 	@Autowired
 	private IUsuariosDao usuarioDao;
+	
+	@Autowired
+	private IPersonasDao personasDao;
 
 	@Autowired
 	private MessageSource messageSource;
@@ -63,7 +63,9 @@ public class AplicacionController {
 
 		Historia historias = new Historia();
 		historias.setFechaRegistro(new Date());
-		List<PersonasPorCargos> listado = personasPorCargosService.listarTodos();
+		
+		List<Persona> listado = (List<Persona>) personasDao.findAll();
+		
 		model.addAttribute("listado", listado);
 		model.addAttribute("historias", historias);
 		return "historias/registrar";
