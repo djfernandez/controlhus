@@ -9,8 +9,16 @@
 		<div class="card bg-dark text-white">
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body">
+
+				<div th:object="${historias}" th:remove="tag">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+						role="alert">
+						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+					</ul>
+				</div>
+
 				<div th:object="${historias}" th:remove="tag"></div>
-				<form th:action="@{/registrar}" th:object="${historias}"
+				<form th:action="@{/hu/registrar}" th:object="${historias}"
 					method="post" enctype="multipart/form-data">
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Como</label>
@@ -38,15 +46,19 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Fecha</label>
 						<div class="col-sm-6">
-							<input type="text" readonly="readonly" class="form-control" th:field="*{fechaRegistro}" />
-							<small class="form-text text-danger"></small>
+							<input type="text" readonly="readonly" class="form-control"
+								th:field="*{fechaRegistro}" /> <small
+								class="form-text text-danger"></small>
 						</div>
 					</div>
 
 					<div class="form-group row">
 						<div class="col-sm-6">
-							<input type="submit" value="Crear historia"
-								class="btn btn-secondary" />
+							<input type="text" hidden="true" readonly="readonly"
+								class="form-control" th:field="*{id}" /> <input type="text"
+								hidden="true" readonly="readonly" class="form-control"
+								th:field="*{estado}" /> <input type="submit"
+								value="Crear historia" class="btn btn-secondary" />
 						</div>
 					</div>
 

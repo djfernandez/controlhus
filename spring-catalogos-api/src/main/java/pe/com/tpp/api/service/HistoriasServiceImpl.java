@@ -37,12 +37,14 @@ public class HistoriasServiceImpl implements IHistoriasService {
 	}
 
 	@Override
+	@Transactional
 	public void eliminar(Long id) {
 		// TODO Auto-generated method stub
 		historiasDao.deleteById(id);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Historia> listadoPersonasCargosUsuario(Integer estado) {
 		// TODO Auto-generated method stub
 		return (List<Historia>) historiasDao.listadoPersonasCargosUsuario(estado);

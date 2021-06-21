@@ -10,7 +10,7 @@
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body">
 				<div class="form-group col-sm-6">
-					<a class="btn btn-success btn-sm" th:href="@{/registrar}" th:text="'crear hu'"></a>
+					<a class="btn btn-success btn-sm" th:href="@{/hu/registrar}" th:text="'crear hu'"></a>
 				</div>
 
 				<table class="table table-striped">
@@ -22,27 +22,23 @@
 							<th>Para</th>
 							<th>Usuario</th>
 							<th>Fecha</th>
+							<th colspan="2">Opciones</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="historia: ${historias}">
-							<td><a class="btn btn-primary btn-xs" th:href="@{/ver/} + ${historia.id}"
+							<td><a class="btn btn-primary btn-xs" th:href="@{/hu/ver/} + ${historia.id}"
 									th:text="${historia.id}"></a></td>
 							<td th:text="${historia.persona.cargos.nombre} + ' - ' + ${historia.persona.nombres}"></td>
 							<td th:text="${historia.necesita}"></td>
 							<td th:text="${historia.para}"></td>
 							<td th:text="${historia.Usuario.username}"></td>
 							<td th:text="${historia.fechaRegistro}"></td>
-							<!--
-							<td><a class="btn btn-success btn-sm"
-								th:href="@{'/factura/form/' + ${cliente.id}}"
-								th:text="'crear factura'"></a></td>
 							<td><a class="btn btn-primary btn-sm"
-								th:href="@{/form/} + ${cliente.id}" th:text="'editar'"></a></td>
+								th:href="@{/hu/editar/} + ${historia.id}" th:text="'editar'"></a></td>
 							<td><a class="btn btn-danger btn-sm"
-								th:href="@{/eliminar/} + ${cliente.id}" th:text="'eliminar'"
-								onclick="return confirm('Estï¿½s seguro que quieres eliminar?');"></a></td>
-								-->
+								th:href="@{/hu/eliminar/} + ${historia.id}" th:text="'eliminar'"
+								onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
 						</tr>
 					</tbody>
 

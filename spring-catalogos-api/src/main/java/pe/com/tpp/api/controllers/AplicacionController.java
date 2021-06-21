@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -17,6 +19,7 @@ import pe.com.tpp.api.service.*;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -28,7 +31,7 @@ public class AplicacionController {
 
 	@Autowired
 	private IUsuariosDao usuarioDao;
-	
+
 	@Autowired
 	private IPersonasDao personasDao;
 
@@ -58,38 +61,74 @@ public class AplicacionController {
 		return "login";
 	}
 
-	@GetMapping("/registrar")
-	public String gethuRegistrar(Model model) {
-
-		Historia historias = new Historia();
-		historias.setFechaRegistro(new Date());
-		
-		List<Persona> listado = (List<Persona>) personasDao.findAll();
-		
-		model.addAttribute("listado", listado);
-		model.addAttribute("historias", historias);
-		return "historias/registrar";
-	}
-
-	@PostMapping("/registrar")
-	public String posthuRegistrar(@Valid Historia historias, Model model, Principal principal) {
-
-		Usuario usuario = usuarioDao.findByUsername(principal.getName());
-
-		// historias.setId((long) 0);
-		historias.setUsuario(usuario);
-		historiasService.grabar(historias);
-		return "redirect:listado";
-	}
-
-	@GetMapping({ "/listado", "/" })
+	@GetMapping({ "/hu/listado", "/" })
 	public String gethuListado(Model model) {
-
 		List<Historia> historias = historiasService.listadoPersonasCargosUsuario(1);
 		model.addAttribute("titulo", "DEV");
 		model.addAttribute("historias", historias);
-
 		return "/historias/listar";
+	}
+
+	@GetMapping("/hu/registrar")
+	public String gethuRegistrar(Map<String, Object> model) {
+
+		Historia historias = new Historia();
+		historias.setFechaRegistro(new Date());
+
+		List<Persona> listado = (List<Persona>) personasDao.findAll();
+
+		model.put("listado", listado);
+		model.put("historias", historias);
+		return "historias/registrar";
+	}
+
+	@PostMapping("/hu/registrar")
+	public String posthuRegistrar(@Valid Historia historia, BindingResult result, Model model, RedirectAttributes flash,
+			Principal principal) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("titulo", messageSource.getMessage("Error en historias", null, null));
+			return "redirect:listado";
+		}
+		/*
+		if (historia.getId() > 0) {
+			model.addAttribute("titulo", messageSource.getMessage("Editar historia", null, null));
+		}
+*/
+		Usuario usuario = usuarioDao.findByUsername(principal.getName());
+		// historias.setId((long) 0);
+		historia.setUsuario(usuario);
+		historiasService.grabar(historia);
+		return "redirect:listado";
+	}
+
+	@GetMapping(value = "/hu/ver/{id}")
+	public String huVer(@PathVariable(value = "id") Long id, Model model) {
+		Historia historia = historiasService.buscarPorId(id);
+		model.addAttribute("historia", historia);
+		return "/historias/ver";
+	}
+
+	@GetMapping(value = "/hu/editar/{id}")
+	public String huEditar(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
+
+		Historia historias = null;
+		if (id > 0) {
+			historias = historiasService.buscarPorId(id);
+			if (historias == null) {
+				flash.addFlashAttribute("error", messageSource.getMessage("No se encontro historia.", null, null));
+				return "redirect:/hu/listado";
+			}
+		} else {
+			flash.addFlashAttribute("error", messageSource.getMessage("Id no es valido.", null, null));
+			return "redirect:/hu/listado";
+		}
+
+		List<Persona> listado = (List<Persona>) personasDao.findAll();
+
+		model.put("listado", listado);
+		model.put("historias", historias);
+		return "historias/registrar";
 	}
 
 }
