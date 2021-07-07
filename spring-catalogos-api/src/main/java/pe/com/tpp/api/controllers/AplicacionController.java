@@ -64,7 +64,7 @@ public class AplicacionController {
 	@GetMapping({ "/hu/listado", "/" })
 	public String gethuListado(Model model) {
 		List<Historia> historias = historiasService.listadoPersonasCargosUsuario(1);
-		model.addAttribute("titulo", "DEV");
+		model.addAttribute("titulo", "LISTADO DE HISTORIAS DE USUARIOS");
 		model.addAttribute("historias", historias);
 		return "/historias/listar";
 	}
