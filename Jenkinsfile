@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('Compilar fuentes') {
       steps {
-        sh 'mvnw compiler'
+        sh '''chmod +x mvnw
+mvnw compiler'''
       }
     }
 
