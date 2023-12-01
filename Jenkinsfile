@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Conectar a Git') {
       steps {
-        build 'mvnw compiler'
+        build './mvnw compiler'
       }
     }
 
