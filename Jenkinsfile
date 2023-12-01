@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Compilar fuentes') {
       steps {
-        sh './mvnw compiler'
+        sh 'mvnw compiler'
       }
     }
 
