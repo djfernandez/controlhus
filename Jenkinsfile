@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh '''chmod +x mvnw
 ./mvnw clean
-./mvnw compile'''
+./mvnw package'''
       }
     }
 
