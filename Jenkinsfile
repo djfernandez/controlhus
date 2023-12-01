@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Conectar a Git') {
+    stage('Compilar fuentes') {
       steps {
-        build './mvnw compiler'
+        sh './mvnw compiler'
       }
     }
 
